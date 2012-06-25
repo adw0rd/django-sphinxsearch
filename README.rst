@@ -57,8 +57,7 @@ The following is some example usage::
 	results3 = queryset.count()
 
 
-
-You can then do something like this::
+If you can not specify a manager in the model, you can use this::
 
 	from djangosphinxsearch.managers import SearchManager
 	from django.contrib.comments import Comment

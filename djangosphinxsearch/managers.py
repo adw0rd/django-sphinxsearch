@@ -25,17 +25,19 @@ class SearchManager(models.Manager):
             for index_name in indexes.split(" ")]
         return " ".join(indexes)
 
-    def query(self, search_query, indexes=None):
+    def query(self, search_query, indexes=None, queryset=None):
         self._index = self.model._meta.db_table if not self._index and hasattr(self, 'model') else self._index
         indexes = self._get_indexes_with_prefix(indexes or self._index)
         self._search_results = self._sphinx.Query(search_query, indexes)
         matches = (self._search_results or {}).get('matches', [])
         objects_ids = [str(m['id']) for m in matches]
-        queryset = self.get_query_set()
+        if queryset is None:
+            queryset = self.get_query_set()
         if not objects_ids:
             queryset = queryset.filter(pk__in=[None])
         else:
+            db_table = queryset.model._meta.db_table
             queryset = queryset.filter(pk__in=objects_ids)\
-            .extra(select={'djangosphinxsearch_position': 'FIELD(id, {ids})'.format(ids=",".join(objects_ids))})\
+            .extra(select={'djangosphinxsearch_position': 'FIELD(`{}`.`id`, {})'.format(db_table, ",".join(objects_ids))})\
             .order_by('djangosphinxsearch_position')
         return queryset
