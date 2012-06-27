@@ -37,7 +37,7 @@ class SearchManager(models.Manager):
             queryset = queryset.filter(pk__in=[None])
         else:
             model_meta = queryset.model._meta
-            if meta.get_field_by_name('id')[1]:
+            if model_meta.get_field_by_name('id')[1]:
                 db_table = model_meta.get_field_by_name('id')[1]._meta.db_table
             else:
                 db_table = model_meta.db_table
