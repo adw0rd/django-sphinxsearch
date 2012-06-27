@@ -36,8 +36,12 @@ class SearchManager(models.Manager):
         if not objects_ids:
             queryset = queryset.filter(pk__in=[None])
         else:
-            db_table = queryset.model._meta.db_table
+            model_meta = queryset.model._meta
+            if meta.get_field_by_name('id')[1]:
+                db_table = model_meta.get_field_by_name('id')[1]._meta.db_table
+            else:
+                db_table = model_meta.db_table
             queryset = queryset.filter(pk__in=objects_ids)\
-            .extra(select={'djangosphinxsearch_position': 'FIELD(`{}`.`id`, {})'.format(db_table, ",".join(objects_ids))})\
-            .order_by('djangosphinxsearch_position')
+                .extra(select={'djangosphinxsearch_position': 'FIELD(`{}`.`id`, {})'.format(db_table, ",".join(objects_ids))})\
+                .order_by('djangosphinxsearch_position')
         return queryset
