@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.db import models
-from djangosphinxsearch.apis import current as sphinxapi
-from djangosphinxsearch import settings
+from django_sphinxsearch.apis import current as sphinxapi
+from django_sphinxsearch import settings
 
 
 class SearchManager(models.Manager):
@@ -19,7 +19,7 @@ class SearchManager(models.Manager):
         self._sphinx.SetLimits(0, limit)
 
     def _get_indexes_with_prefix(self, indexes):
-        index_prefix = settings.DJANGO_SPHINXSEARCH_PREFIX + "_" if settings.DJANGO_SPHINXSEARCH_PREFIX else ""
+        index_prefix = settings.SPHINX_INDEX_PREFIX + "_" if settings.SPHINX_INDEX_PREFIX else ""
         indexes = [
             index_prefix + index_name
             for index_name in indexes.split(" ")]
@@ -42,6 +42,6 @@ class SearchManager(models.Manager):
             else:
                 db_table = model_meta.db_table
             queryset = queryset.filter(pk__in=objects_ids)\
-                .extra(select={'djangosphinxsearch_position': 'FIELD(`{}`.`id`, {})'.format(db_table, ",".join(objects_ids))})\
-                .order_by('djangosphinxsearch_position')
+                .extra(select={'django_sphinxsearch_position': 'FIELD(`{}`.`id`, {})'.format(db_table, ",".join(objects_ids))})\
+                .order_by('django_sphinxsearch_position')
         return queryset

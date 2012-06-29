@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
-from djangosphinxsearch import __version__
+from django_sphinxsearch import __version__
 
 setup(
     name='django-sphinxsearch',

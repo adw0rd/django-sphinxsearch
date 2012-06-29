@@ -6,7 +6,7 @@ SPHINX_SERVER = {
     }
 SPHINX_SERVER = getattr(settings, 'SPHINX_SERVER', SPHINX_SERVER)
 
-DJANGO_SPHINXSEARCH_PREFIX= getattr(settings, 'DJANGO_SPHINXSEARCH_PREFIX', '')
+SPHINX_INDEX_PREFIX= getattr(settings, 'SPHINX_INDEX_PREFIX', '')
 
 # Sphinx 0.9.9 and above -> 0x116
 # Sphinx 0.9.8 -> 0x113

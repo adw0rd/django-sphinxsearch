@@ -34,7 +34,7 @@ The following is some example usage::
 	class MyModel(models.Model):
 
 		search = SearchManager()
-		# The default "index_name" is taken from the DJANGO_SPHINXSEARCH_PREFIX + MyModel._meta.db_table
+		# The default "index_name" is taken from the SPHINX_INDEX_PREFIX + MyModel._meta.db_table
 		# Or you can specify the "index_name" like this:
 		search = SearchManager('index_name')
 

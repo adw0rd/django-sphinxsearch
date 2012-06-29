@@ -9,7 +9,7 @@ class TestSphinxSearch(unittest.TestCase):
         from django.db import connection
         from django.db.models.base import ModelBase
         from django.core.management.color import no_style
-        from djangosphinxsearch.managers import SearchManager
+        from django_sphinxsearch.managers import SearchManager
 
         # Create a dummy model which extends the mixin
         import  pudb; pudb.set_trace()

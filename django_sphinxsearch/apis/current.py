@@ -1,4 +1,4 @@
-from djangosphinxsearch.settings import SPHINX_API_VERSION
+from django_sphinxsearch.settings import SPHINX_API_VERSION
 
 try:
     # if you have installed sphinxapi, then use it.
