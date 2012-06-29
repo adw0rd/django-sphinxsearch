@@ -10,9 +10,7 @@ class SearchManager(models.Manager):
         super(SearchManager, self).__init__(*a, **kw)
         self._index = index
         self._sphinx = sphinxapi.SphinxClient()
-        self._sphinx.SetServer(
-            settings.SPHINX_SERVER.get('host', 'localhost'),
-            settings.SPHINX_SERVER.get('port', 3312))
+        self._sphinx.SetServer(settings.SPHINX_SERVER['host'], settings.SPHINX_SERVER['port'])
         self._sphinx.SetMatchMode(getattr(sphinxapi, mode))
         self._sphinx.SetSortMode(getattr(sphinxapi, sort))
         self._sphinx.SetFieldWeights(fields)
@@ -28,9 +26,11 @@ class SearchManager(models.Manager):
     def query(self, search_query, indexes=None, queryset=None):
         self._index = self.model._meta.db_table if not self._index and hasattr(self, 'model') else self._index
         indexes = self._get_indexes_with_prefix(indexes or self._index)
+
         self._search_results = self._sphinx.Query(search_query, indexes)
         matches = (self._search_results or {}).get('matches', [])
         objects_ids = [str(m['id']) for m in matches]
+
         if queryset is None:
             queryset = self.get_query_set()
         if not objects_ids:

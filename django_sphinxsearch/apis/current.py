@@ -1,3 +1,4 @@
+# coding: utf-8
 from django_sphinxsearch.settings import SPHINX_API_VERSION
 
 try:
