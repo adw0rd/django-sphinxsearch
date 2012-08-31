@@ -67,3 +67,9 @@ If you can not specify a manager in the model, you can use this::
 
 	queryset = Comment.search.query('test', indexes='my_custom_index_for_comments')
 
+
+
+Conversations:
+-----
+
+Russian topic: http://pyha.ru/forum/topic/7894.0
