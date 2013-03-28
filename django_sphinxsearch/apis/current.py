@@ -7,7 +7,7 @@ try:
 except (ImportError, ), exc:
     # Otherwise, if you set SPHINX_API_VERSION, we use this version.
     # If not, use the latest version of the "sphinxsearch.api278"
-    name = '{}.api{}'.format(__name__.rpartition(".")[0], SPHINX_API_VERSION)
+    name = '{0}.api{1}'.format(__name__.rpartition(".")[0], SPHINX_API_VERSION)
     sphinxapi = __import__(name)
     for name in name.split('.')[1:]:
         sphinxapi = getattr(sphinxapi, name)
